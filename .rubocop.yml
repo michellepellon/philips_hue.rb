@@ -1,0 +1,45 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 3.5  # Use 3.5 until RuboCop supports 4.0
+  SuggestExtensions: false
+  Exclude:
+    - 'examples/**/*'
+
+Metrics/BlockLength:
+  Exclude:
+    - '**/*.gemspec'
+    - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 30
+
+# Several methods take connection/TLS settings as keyword arguments. Keyword
+# args don't have the positional-ordering hazard the cop guards against, so we
+# don't count them toward the limit.
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+# The Client owns HTTP transport, the resource methods, and pairing; its
+# small, well-factored helpers run past the default class-length limit.
+Metrics/ClassLength:
+  Max: 160
+
+# Data class inheritance is the correct pattern for our value objects
+Style/DataInheritance:
+  Enabled: false
+
+# We intentionally return nil from capability predicates when the underlying
+# service is absent from the API payload.
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: false
+
+# Development dependencies in gemspec is fine for this project
+Gemspec/DevelopmentDependencies:
+  Enabled: false
+
+# RuboCop doesn't support Ruby 4.0 yet, so ignore this warning
+Gemspec/RequiredRubyVersion:
+  Enabled: false
